@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Wedding Invite</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Poppins',sans-serif;
+  color:white;
+  overflow-x:hidden;
+
+  /* CINEMATIC GRADIENT BACKGROUND */
+  background: radial-gradient(circle at 20% 30%, #2a0f1c, #000),
+              radial-gradient(circle at 80% 70%, #1a0f2a, transparent),
+              #000;
+}
+
+/* ---------- HOME ---------- */
+#home{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* 3D GLOW RIBBON */
+.ribbon{
+  width:240px;height:240px;
+  border-radius:50%;
+  background:linear-gradient(145deg,#ff4d6d,#ff9a9e);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+
+  box-shadow:
+    0 0 40px rgba(255,77,109,0.6),
+    inset 0 0 20px rgba(255,255,255,0.2);
+
+  animation:float 3s ease-in-out infinite;
+  transform-style:preserve-3d;
+}
+
+.heart{
+  font-size:70px;
+  animation:beat 1.2s infinite;
+}
+
+/* ANIMATIONS */
+@keyframes beat{
+  50%{transform:scale(1.2);}
+}
+@keyframes float{
+  50%{transform:translateY(-15px) rotateX(10deg);}
+}
+
+/* ---------- DOOR (3D) ---------- */
+#door{
+  position:fixed;
+  width:100%;height:100%;
+  top:0;left:0;
+  display:flex;
+  perspective:1200px;
+  z-index:999;
+}
+
+.panel{
+  width:50%;height:100%;
+  background:linear-gradient(135deg,#111,#000);
+  transition:1.6s cubic-bezier(.77,0,.18,1);
+}
+
+.left{transform-origin:left;}
+.right{transform-origin:right;}
+
+.open .left{
+  transform:rotateY(-100deg);
+}
+.open .right{
+  transform:rotateY(100deg);
+}
+
+/* ---------- MAIN ---------- */
+#main{
+  display:none;
+  padding:40px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+/* ---------- SECTION ---------- */
+.section{
+  margin:100px 0;
+  text-align:center;
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+.section.show{
+  opacity:1;
+  transform:none;
+}
+
+/* TYPOGRAPHY */
+h1{
+  font-family:'Great Vibes';
+  font-size:60px;
+  background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+h2{
+  font-family:'Playfair Display';
+  color:#ff4d6d;
+}
+
+/* GLASS CARD */
+.card{
+  margin-top:20px;
+  padding:30px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.6),
+    inset 0 0 20px rgba(255,255,255,0.05);
+
+  transition:0.4s;
+}
+.card:hover{
+  transform:translateY(-10px) scale(1.02);
+}
+
+/* COUPLE */
+.couple{
+  display:flex;
+  gap:30px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.couple img{
+  width:220px;height:280px;
+  object-fit:cover;
+  border-radius:20px;
+}
+
+/* SCRATCH CARD */
+#scratch{
+  position:relative;
+  width:320px;height:160px;
+  margin:auto;
+}
+#scratch canvas{
+  position:absolute;top:0;left:0;
+}
+#scratchText{
+  position:absolute;
+  width:100%;height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:26px;
+}
+
+/* BUTTON */
+.btn{
+  padding:12px 25px;
+  background:linear-gradient(45deg,#ff4d6d,#ff9a9e);
+  border:none;
+  border-radius:30px;
+  color:white;
+  cursor:pointer;
+  margin-top:20px;
+  box-shadow:0 5px 20px rgba(255,77,109,0.5);
+}
+
+/* PARTICLES */
+.particle{
+  position:fixed;
+  width:6px;height:6px;
+  background:#ff4d6d;
+  border-radius:50%;
+  opacity:0.5;
+  animation:floatUp 10s linear infinite;
+}
+@keyframes floatUp{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  h1{font-size:34px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- HOME -->
+<div id="home">
+  <div class="ribbon" onclick="openInvite()">
+    <div class="heart">❤</div>
+  </div>
+  <p style="margin-top:20px;">Tap to Enter</p>
+</div>
+
+<!-- DOOR -->
+<div id="door">
+  <div class="panel left"></div>
+  <div class="panel right"></div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<div class="section">
+  <h1>Krish ❤️ Aanya</h1>
+  <p>Our forever begins</p>
+</div>
+
+<div class="section">
+  <h2>Reveal the Date</h2>
+  <div id="scratch">
+    <div id="scratchText">💍 20 Feb 2026</div>
+    <canvas id="canvas"></canvas>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Events</h2>
+  <div class="card">
+    Engagement • Haldi • Wedding • Reception
+  </div>
+</div>
+
+<div class="section">
+  <h2>Venue</h2>
+  <div class="card">
+    Royal Palace, Bangalore<br>
+    <button class="btn" onclick="window.open('https://maps.google.com')">Open Map</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+
+/* OPEN */
+function openInvite(){
+  document.getElementById("home").style.display="none";
+  document.getElementById("door").classList.add("open");
+
+  setTimeout(()=>{
+    document.getElementById("main").style.display="block";
+    reveal();
+  },1500);
+}
+
+/* SCROLL */
+function reveal(){
+  const sections=document.querySelectorAll(".section");
+  window.addEventListener("scroll",()=>{
+    sections.forEach(sec=>{
+      if(sec.getBoundingClientRect().top < window.innerHeight-100){
+        sec.classList.add("show");
+      }
+    });
+  });
+}
+
+/* SCRATCH */
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=320;canvas.height=160;
+ctx.fillStyle="#aaa";ctx.fillRect(0,0,320,160);
+
+canvas.addEventListener("mousemove",(e)=>{
+  ctx.globalCompositeOperation="destination-out";
+  ctx.beginPath();
+  ctx.arc(e.offsetX,e.offsetY,20,0,Math.PI*2);
+  ctx.fill();
+});
+
+/* PARTICLES */
+for(let i=0;i<30;i++){
+  let p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=(5+Math.random()*5)+"s";
+  document.body.appendChild(p);
+}
+
+</script>
+
+</body>
+</html>
